@@ -1,62 +1,64 @@
-    const init = async () => {
-      try {
-        const vision = await FilesetResolver.forVisionTasks(
-          "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm",
-        );
+const init = async () => {
+  try {
+    const vision = await FilesetResolver.forVisionTasks(
+      "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm",
+    );
 
-        landmarkerRef.current = await FaceLandmarker.createFromOptions(vision, {
-          baseOptions: {
-            modelAssetPath:
-              "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
-          },
-          outputFaceBlendshapes: true,
-          runningMode: "VIDEO",
-          numFaces: 1,
-        });
+    landmarkerRef.current = await FaceLandmarker.createFromOptions(vision, {
+      baseOptions: {
+        modelAssetPath:
+          "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
+      },
+      outputFaceBlendshapes: true,
+      runningMode: "VIDEO",
+      numFaces: 1,
+    });
 
-        stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        videoRef.current.srcObject = stream;
-        await videoRef.current.play();
+    stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    videoRef.current.srcObject = stream;
+    await videoRef.current.play();
 
-        detect();
-      } catch (err) {
-        console.error("Initialization error:", err);
-      }
-    };
+    detect();
+  } catch (err) {
+    console.error("Initialization error:", err);
+  }
+};
 
-    const detect = () => {
-      if (!landmarkerRef.current || !videoRef.current) return;
+const detect = () => {
+  if (!landmarkerRef.current || !videoRef.current) return;
 
-      const results = landmarkerRef.current.detectForVideo(
-        videoRef.current,
-        performance.now(),
-      );
+  const results = landmarkerRef.current.detectForVideo(
+    videoRef.current,
+    performance.now(),
+  );
 
-      if (results.faceBlendshapes?.length > 0) {
-        const blendshapes = results.faceBlendshapes[0].categories;
+  if (results.faceBlendshapes?.length > 0) {
+    const blendshapes = results.faceBlendshapes[0].categories;
 
-        const getScore = (name) =>
-          blendshapes.find((b) => b.categoryName === name)?.score || 0;
+    const getScore = (name) =>
+      blendshapes.find((b) => b.categoryName === name)?.score || 0;
 
-        const smileLeft = getScore("mouthSmileLeft");
-        const smileRight = getScore("mouthSmileRight");
-        const jawOpen = getScore("jawOpen");
-        const browUp = getScore("browInnerUp");
-        const frownLeft = getScore("mouthFrownLeft");
-        const frownRight = getScore("mouthFrownRight");
+    const smileLeft = getScore("mouthSmileLeft");
+    const smileRight = getScore("mouthSmileRight");
+    const jawOpen = getScore("jawOpen");
+    const browUp = getScore("browInnerUp");
+    const frownLeft = getScore("mouthFrownLeft");
+    const frownRight = getScore("mouthFrownRight");
 
-        let currentExpression = "Neutral";
+    let currentExpression = "Neutral";
 
-        if (smileLeft > 0.5 && smileRight > 0.5) {
-          currentExpression = "Happy 😄";
-        } else if (jawOpen > 0.6 && browUp > 0.5) {
-          currentExpression = "Surprised 😲";
-        } else if (frownLeft > 0.5 && frownRight > 0.5) {
-          currentExpression = "Sad 😢";
-        }
+    if (smileLeft > 0.5 && smileRight > 0.5) {
+      currentExpression = "Happy 😄";
+    } else if (jawOpen > 0.5 && browUp > 0.5 && (smileLeft > 0.3 || smileRight > 0.3)) {
+      currentExpression = "Energetic ⚡";
+    } else if (jawOpen > 0.6 && browUp > 0.5) {
+      currentExpression = "Surprised 😲";
+    } else if (frownLeft > 0.5 && frownRight > 0.5) {
+      currentExpression = "Sad 😢";
+    }
 
-        setExpression(currentExpression);
-      }
+    setExpression(currentExpression);
+  }
 
-      animationRef.current = requestAnimationFrame(detect);
-    };
+  animationRef.current = requestAnimationFrame(detect);
+};
