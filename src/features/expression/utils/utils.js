@@ -1,4 +1,8 @@
-const init = async () => {
+import { FaceLandmarker, FilesetResolver } from "@mediapipe/tasks-vision";
+
+import { useRef } from "react";
+
+export const init = async ({landmarkerRef,videoRef,animationRef,stream}) => {
   try {
     const vision = await FilesetResolver.forVisionTasks(
       "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm",
@@ -24,7 +28,7 @@ const init = async () => {
   }
 };
 
-const detect = () => {
+export const detect = ({landmarkerRef,videoRef,animationRef,setExpression}) => {
   if (!landmarkerRef.current || !videoRef.current) return;
 
   const results = landmarkerRef.current.detectForVideo(
@@ -49,7 +53,11 @@ const detect = () => {
 
     if (smileLeft > 0.5 && smileRight > 0.5) {
       currentExpression = "Happy 😄";
-    } else if (jawOpen > 0.5 && browUp > 0.5 && (smileLeft > 0.3 || smileRight > 0.3)) {
+    } else if (
+      jawOpen > 0.5 &&
+      browUp > 0.5 &&
+      (smileLeft > 0.3 || smileRight > 0.3)
+    ) {
       currentExpression = "Energetic ⚡";
     } else if (jawOpen > 0.6 && browUp > 0.5) {
       currentExpression = "Surprised 😲";

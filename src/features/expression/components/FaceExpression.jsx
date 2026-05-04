@@ -1,16 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { FaceLandmarker, FilesetResolver } from "@mediapipe/tasks-vision";
+import { init, detect } from "../utils/utils";
 
 export default function FaceExpression() {
   const videoRef = useRef(null);
   const landmarkerRef = useRef(null);
   const animationRef = useRef(null);
+
   const [expression, setExpression] = useState("Detecting...");
 
-  useEffect(() => {
-    let stream;
+  let stream;
 
-    init();
+  useEffect(() => {
+    init({ landmarkerRef, videoRef, animationRef, stream });
 
     return () => {
       if (animationRef.current) {
@@ -36,6 +38,14 @@ export default function FaceExpression() {
         muted
       />
       <h2>{expression}</h2>
+      <button
+        className="detect-btn"
+        onClick={() => {
+          detect({ landmarkerRef, videoRef, animationRef, setExpression });
+        }}
+      >
+        Detect Expression
+      </button>
     </div>
   );
 }
