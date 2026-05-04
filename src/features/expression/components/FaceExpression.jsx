@@ -1,18 +1,104 @@
 import { useEffect, useRef, useState } from "react";
-import { FaceLandmarker, FilesetResolver } from "@mediapipe/tasks-vision";
-import { init, detect } from "../utils/utils";
+import {
+  FaceLandmarker,
+  FilesetResolver
+} from "@mediapipe/tasks-vision";
 
 export default function FaceExpression() {
   const videoRef = useRef(null);
   const landmarkerRef = useRef(null);
   const animationRef = useRef(null);
-
   const [expression, setExpression] = useState("Detecting...");
 
-  let stream;
-
   useEffect(() => {
-    init({ landmarkerRef, videoRef, animationRef, stream });
+    let stream;
+
+    const init = async () => {
+      const vision = await FilesetResolver.forVisionTasks(
+        "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
+      );
+
+      landmarkerRef.current = await FaceLandmarker.createFromOptions(
+        vision,
+        {
+          baseOptions: {
+            modelAssetPath:
+              "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task"
+          },
+          outputFaceBlendshapes: true,
+          runningMode: "VIDEO",
+          numFaces: 1
+        }
+      );
+
+      stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      videoRef.current.srcObject = stream;
+      await videoRef.current.play();
+
+      detect();
+    };
+
+    const detect = () => {
+      if (!landmarkerRef.current || !videoRef.current) return;
+
+      const results = landmarkerRef.current.detectForVideo(
+        videoRef.current,
+        performance.now()
+      );
+
+      if (results.faceBlendshapes?.length > 0) {
+        const blendshapes = results.faceBlendshapes[0].categories;
+
+        const getScore = (name) =>
+          blendshapes.find((b) => b.categoryName === name)?.score || 0;
+
+        const smileLeft = getScore("mouthSmileLeft");
+        const smileRight = getScore("mouthSmileRight");
+        const jawOpen = getScore("jawOpen");
+        const browUp = getScore("browInnerUp");
+        const frownLeft = getScore("mouthFrownLeft");
+        const frownRight = getScore("mouthFrownRight");
+        const browDownLeft = getScore("browDownLeft");
+        const browDownRight = getScore("browDownRight");
+
+        let currentExpression = "Neutral 😐";
+
+        // 😄 Happy
+        if (smileLeft > 0.5 && smileRight > 0.5) {
+          currentExpression = "Happy 😄";
+
+        // ⚡ Energetic (smiling + mouth open)
+        } else if (
+          smileLeft > 0.4 &&
+          smileRight > 0.4 &&
+          jawOpen > 0.5
+        ) {
+          currentExpression = "Energetic ⚡";
+
+        // 😲 Surprised
+        } else if (jawOpen > 0.6 && browUp > 0.5) {
+          currentExpression = "Surprised 😲";
+
+        // 😢 Sad
+        } else if (frownLeft > 0.5 && frownRight > 0.5) {
+          currentExpression = "Sad 😢";
+
+        // 😠 Angry (brows down + frown)
+        } else if (
+          browDownLeft > 0.4 &&
+          browDownRight > 0.4 &&
+          (frownLeft > 0.3 || frownRight > 0.3)
+        ) {
+          currentExpression = "Angry 😠";
+        }
+
+        setExpression(currentExpression);
+      }
+
+      animationRef.current = requestAnimationFrame(detect);
+    };
+
+    init();
 
     return () => {
       if (animationRef.current) {
@@ -24,7 +110,9 @@ export default function FaceExpression() {
       }
 
       if (videoRef.current?.srcObject) {
-        videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
+        videoRef.current.srcObject
+          .getTracks()
+          .forEach((track) => track.stop());
       }
     };
   }, []);
@@ -35,17 +123,8 @@ export default function FaceExpression() {
         ref={videoRef}
         style={{ width: "400px", borderRadius: "12px" }}
         playsInline
-        muted
       />
       <h2>{expression}</h2>
-      <button
-        className="detect-btn"
-        onClick={() => {
-          detect({ landmarkerRef, videoRef, animationRef, setExpression });
-        }}
-      >
-        Detect Expression
-      </button>
     </div>
   );
 }
