@@ -1,6 +1,6 @@
 const model = require(".././models/auth.model");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs")
+const bcrypt = require("bcryptjs");
 
 const registerController = async (req, res) => {
     try {
@@ -44,6 +44,8 @@ const registerController = async (req, res) => {
         })
     }
 }
+
+console.log("Hello")
 
 const loginController = async (req, res) => {
     try {
