@@ -43,9 +43,8 @@ const registerController = async (req, res) => {
             error : error.message
         })
     }
+    console.log("Hello")
 }
-
-console.log("Hello")
 
 const loginController = async (req, res) => {
     try {
