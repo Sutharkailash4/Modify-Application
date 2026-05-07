@@ -20,13 +20,6 @@ const identifyUser = async (req, res, next) => {
 
         req.user = decoded;
         next();
-        
-        res.status(200).json({
-            messsage : "User Fetched Successfully",
-            id : decoded.id,
-            email : decoded.email,
-            username : decoded.username 
-        })
     } catch(error) {
         res.status(400).json({
             message : "Something Went Wrong",
@@ -34,3 +27,5 @@ const identifyUser = async (req, res, next) => {
         })
     }
 }
+
+module.exports = identifyUser;

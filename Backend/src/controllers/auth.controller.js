@@ -175,26 +175,9 @@ const loginController = async (req, res) => {
 
 const getMeController = async (req, res) => {
     try {   
-        const token = req.cookies.access_token;
-        if(!token) {
-            return res.status(409).json({
-                message : "Token Not Provided ! Unauthorized Access"
-            })
-        }
-        let decoded = null;
-        try {
-            decoded = jwt.verify(token, process.env.JWT_ACCESS_TOKEN)
-        } catch(error) {
-            return res.status(409).json({
-                message : "Token is Not Valid ! Unauthorized Access"
-            })
-        }
-        res.status(200).json({
-            message : "User Fetched Successfully",
-            id : decoded.id,
-            email : decoded.email,
-            username : decoded.username
-        })
+       const id = req.user.id;
+       console.log(id);
+       res.send("ok");
     } catch(error) {
         res.status(400).json({
             message : "Something Went Wrong",
