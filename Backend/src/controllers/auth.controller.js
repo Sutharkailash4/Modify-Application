@@ -176,8 +176,18 @@ const loginController = async (req, res) => {
 const getMeController = async (req, res) => {
     try {   
        const id = req.user.id;
-       console.log(id);
-       res.send("ok");
+       const user = await model.findbyId(id);
+       if(!user) {
+        return res.status(404).json({
+            message : "Unauthorizes Access"
+        })
+       }
+       res.status(200).json({
+            message : "User Fetched Successfully",
+            id : user._id,
+            email : user.email,
+            username user.username: 
+       })
     } catch(error) {
         res.status(400).json({
             message : "Something Went Wrong",

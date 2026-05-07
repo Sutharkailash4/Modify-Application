@@ -28,4 +28,6 @@ const identifyUser = async (req, res, next) => {
     }
 }
 
-module.exports = identifyUser;
+module.exports = {
+    identifyUser
+};
