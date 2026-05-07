@@ -186,8 +186,19 @@ const getMeController = async (req, res) => {
             message : "User Fetched Successfully",
             id : user._id,
             email : user.email,
-            username user.username: 
+            username : user.username  
        })
+    } catch(error) {
+        res.status(400).json({
+            message : "Something Went Wrong",
+            error : error.message
+        })
+    }
+}
+
+const logoutController = async (req, res) => {
+    try {
+        
     } catch(error) {
         res.status(400).json({
             message : "Something Went Wrong",
