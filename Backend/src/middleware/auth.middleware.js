@@ -17,6 +17,9 @@ const identifyUser = async (req, res, next) => {
                 message : "Token is Not Valid ! Unauthorized Access"
             })
         }
+
+        req.user = decoded;
+        next();
         
         res.status(200).json({
             messsage : "User Fetched Successfully",
