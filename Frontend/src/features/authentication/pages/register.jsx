@@ -23,10 +23,42 @@ const Register = () => {
           <p>find the perfect song for you.</p>
         </div>
         <div className="register-inputs-box">
-          <input type="text" />
-          <input type="email" />
-          <input type="password" />
-          <input type="password" />
+          <img
+            src="../../../.././public/user.png"
+            alt="image not found"
+            className="input-icon user-input-icon"
+          />
+          <span className="register-input-span register-username-span">
+            Full Name
+          </span>
+          <input type="text" placeholder="Enter Your Full Name" />
+          <img
+            src="../../../.././public/email.png"
+            alt="image not found"
+            className="input-icon email-input-icon"
+          />
+          <span className="register-input-span register-email-span">
+            Email Name
+          </span>
+          <input type="email" placeholder="Enter Your Email" />
+          <img
+            src="../../../.././public/lock.png"
+            alt="image not found"
+            className="input-icon password-input-icon"
+          />
+          <span className="register-input-span register-password-span">
+            Password
+          </span>
+          <input type="password" placeholder="Create a Password" />
+          <img
+            src="../../../.././public/lock.png"
+            alt="image not found"
+            className="input-icon confirm-password-input-icon"
+          />
+          <span className="register-input-span register-confirm-password-span">
+            Confirm Password
+          </span>
+          <input type="password" placeholder="Cofirm Your Password" />
         </div>
         <div className="register-terms-box">
           <input type="checkbox" />
