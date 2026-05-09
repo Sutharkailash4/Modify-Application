@@ -1,4 +1,4 @@
-.register-page{
+.register-page {
     width: 100%;
     min-height: 100vh;
     display: flex;
@@ -6,47 +6,95 @@
     justify-content: center;
 }
 
-.register-page form{
+.register-page form {
     border: 1px solid black;
 }
 
-.register-page .register-heading-box{
+.register-page .register-heading-box {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 20px;
 }
 
-.register-page .register-heading-box .register-heading-img-box img{
+.register-page .register-heading-box .register-heading-img-box img {
     width: 70px;
     height: 70px;
 }
 
-.register-page .register-heading-box .register-heading-text-box h2{
+.register-page .register-heading-box .register-heading-text-box h2 {
     font-family: sans-serif;
     font-size: 35px;
     font-weight: 600;
 }
 
-.register-page .register-heading-box .register-heading-text-box p{
+.register-page .register-heading-box .register-heading-text-box p {
     font-family: sans-serif;
     font-size: 14px;
     color: #222121;
     font-weight: 500;
 }
 
-.register-page .register-heading-second-box{
+.register-page .register-heading-second-box {
     display: flex;
     flex-direction: column;
     text-align: center;
 }
 
-.register-page .register-heading-second-box h2{
+.register-page .register-heading-second-box h2 {
     font-family: sans-serif;
     font-size: 30px;
     font-weight: 400;
 }
 
-.register-page .register-heading-second-box p{
+.register-page .register-heading-second-box p {
     font-size: 17px;
+}
+
+.register-page .register-inputs-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.register-page .register-inputs-box input {
+    width: 350px;
+    height: 50px;
+    border-radius: 8px;
+    border: none;
+    outline: 1px solid black;
+}
+
+.register-page .register-terms-box {
+    display: flex;
+    gap: 10px;
+}
+
+.register-page .register-terms-box input {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.register-page .register-btn {
+    width: 100%;
+    height: 50px;
+    background: linear-gradient(90deg,
+            #602df8 0%,
+            #8b3dff 40%,
+            #f03cb4 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    gap: 10px;
+}
+
+.register-page .register-btn i {
+    transition: all linear 0.2s;
+    font-size: 20px;
+}
+
+.register-page .register-btn:hover i {
+    transform: translateX(90px);
 }

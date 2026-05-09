@@ -1,5 +1,6 @@
 import React from "react";
 import ".././style/register.css";
+import "../../shared/style.global.css";
 
 const Register = () => {
   return (
@@ -27,7 +28,7 @@ const Register = () => {
           <input type="password" />
           <input type="password" />
         </div>
-        <div className="terms-box">
+        <div className="register-terms-box">
           <input type="checkbox" />
           <p className="terms-para">
             I agree to the{" "}
@@ -35,7 +36,7 @@ const Register = () => {
             <span className="text-purple-color">Private Policy</span>
           </p>
         </div>
-        <button className="register-btn form-btn btn">
+        <button type="submit" className="register-btn form-btn">
           Create Account
           <i class="ri-arrow-right-long-fill"></i>
         </button>

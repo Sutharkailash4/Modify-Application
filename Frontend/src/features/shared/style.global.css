@@ -1,0 +1,10 @@
+button{
+    cursor: pointer;
+    color: white;
+    border-radius: 8px;
+    border: none;
+}
+
+button:active{
+    transform: scale(0.95);
+}
