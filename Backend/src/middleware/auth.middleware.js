@@ -11,7 +11,7 @@ const identifyUser = async (req, res, next) => {
                 message : "Token  Not Provided ! Unauthorized Access"
             })
         }
-        const isTokenBlacklisted = await blacklistModel.findOne({token});
+        const isTokenBlacklisted = await redis.get(token);
         if(isTokenBlacklisted) {
             return res.status(401).json({
                 message : "Invalid Token"

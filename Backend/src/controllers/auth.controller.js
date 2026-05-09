@@ -197,7 +197,7 @@ const logoutController = async (req, res) => {
     try {
         const token = req.cookies.access_token;
         res.clearCookie("access_token");
-        await redis.set(token, Date.now().toString());
+        await redis.set(token, Date.now().toString(),"EX",60*60);
         res.status(200).json({
             message: "User Logout Successfully",
         });
