@@ -1,0 +1,52 @@
+.register-page{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.register-page form{
+    border: 1px solid black;
+}
+
+.register-page .register-heading-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.register-page .register-heading-box .register-heading-img-box img{
+    width: 70px;
+    height: 70px;
+}
+
+.register-page .register-heading-box .register-heading-text-box h2{
+    font-family: sans-serif;
+    font-size: 35px;
+    font-weight: 600;
+}
+
+.register-page .register-heading-box .register-heading-text-box p{
+    font-family: sans-serif;
+    font-size: 14px;
+    color: #222121;
+    font-weight: 500;
+}
+
+.register-page .register-heading-second-box{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.register-page .register-heading-second-box h2{
+    font-family: sans-serif;
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.register-page .register-heading-second-box p{
+    font-size: 17px;
+}
