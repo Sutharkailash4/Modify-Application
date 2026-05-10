@@ -163,3 +163,11 @@
 .register-page .register-inputs-box .register-confirm-password-span {
     top: 81%;
 }
+
+.register-page .login-register-link{
+    text-align: center;
+}
+
+.register-page .login-register-link p{
+    font-family : sans-serif
+}

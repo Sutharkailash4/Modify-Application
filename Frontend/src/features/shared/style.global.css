@@ -1,10 +1,19 @@
-button{
+button {
     cursor: pointer;
     color: white;
     border-radius: 8px;
     border: none;
 }
 
-button:active{
+button:active {
     transform: scale(0.95);
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+.text-purple-color{
+    color: rgb(189, 4, 189);
 }

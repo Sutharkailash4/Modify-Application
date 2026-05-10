@@ -1,6 +1,7 @@
 import React from "react";
 import ".././style/register.css";
 import "../../shared/style.global.css";
+import { NavLink } from "react-router-dom";
 
 const Register = () => {
   return (
@@ -31,7 +32,12 @@ const Register = () => {
           <span className="register-input-span register-username-span">
             Full Name
           </span>
-          <input type="text" placeholder="Enter Your Full Name" />
+          <input
+            type="text"
+            placeholder="Enter Your Full Name"
+            id="register-name"
+            name="register-name"
+          />
           <img
             src="../../../.././public/email.png"
             alt="image not found"
@@ -40,7 +46,12 @@ const Register = () => {
           <span className="register-input-span register-email-span">
             Email Name
           </span>
-          <input type="email" placeholder="Enter Your Email" />
+          <input
+            type="email"
+            placeholder="Enter Your Email"
+            id="register-email"
+            name="register-email"
+          />
           <img
             src="../../../.././public/lock.png"
             alt="image not found"
@@ -49,7 +60,12 @@ const Register = () => {
           <span className="register-input-span register-password-span">
             Password
           </span>
-          <input type="password" placeholder="Create a Password" />
+          <input
+            type="password"
+            placeholder="Create a Password"
+            id="register-password"
+            name="register-password"
+          />
           <img
             src="../../../.././public/lock.png"
             alt="image not found"
@@ -58,7 +74,12 @@ const Register = () => {
           <span className="register-input-span register-confirm-password-span">
             Confirm Password
           </span>
-          <input type="password" placeholder="Cofirm Your Password" />
+          <input
+            type="password"
+            placeholder="Cofirm Your Password"
+            id="register-confirm-password"
+            name="register-confirm-password"
+          />
         </div>
         <div className="register-terms-box">
           <input type="checkbox" />
@@ -72,6 +93,14 @@ const Register = () => {
           Create Account
           <i class="ri-arrow-right-long-fill"></i>
         </button>
+        <div className="login-register-link">
+          <p>
+            Don't have an account?{" "}
+            <NavLink to={"/login"} className="text-purple-color">
+              Login
+            </NavLink>
+          </p>
+        </div>
       </form>
     </div>
   );

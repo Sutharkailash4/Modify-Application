@@ -81,7 +81,7 @@
     width: 40px;
     height: 40px;
     position: absolute;
-    left: 1%;
+    left: 1.5%;
     background: linear-gradient(90deg,
             #602df8 0%,
             #8b3dff 40%,
@@ -95,7 +95,7 @@
 }
 
 .login-page .login-inputs-box .password-input-icon {
-    top: 55%;
+    top: 61%;
 }
 
 .login-page .login-inputs-box .login-input-span {
@@ -106,11 +106,11 @@
 }
 
 .login-page .login-inputs-box .login-email-span {
-    top: 7%;
+    top: 6%;
 }
 
 .login-page .login-inputs-box .login-password-span {
-    top: 58%;
+    top: 61%;
 }
 
 .login-page .login-remember-forgot-box {

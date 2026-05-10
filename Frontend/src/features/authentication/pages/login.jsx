@@ -1,6 +1,7 @@
 import React from "react";
 import ".././style/login.css";
 import "../../shared/style.global.css";
+import { NavLink } from "react-router";
 
 const Login = () => {
   return (
@@ -37,7 +38,7 @@ const Login = () => {
             Email Address
           </span>
 
-          <input type="email" placeholder="Enter Your Email" />
+          <input type="email" placeholder="Enter Your Email" id="login-email" name="login-email"/>
 
           <img
             src="../../../.././public/lock.png"
@@ -45,11 +46,9 @@ const Login = () => {
             className="input-icon password-input-icon"
           />
 
-          <span className="login-input-span login-password-span">
-            Password
-          </span>
+          <span className="login-input-span login-password-span">Password</span>
 
-          <input type="password" placeholder="Enter Your Password" />
+          <input type="password" placeholder="Enter Your Password" id="login-password" name="login-password"/>
         </div>
 
         <div className="login-remember-forgot-box">
@@ -58,9 +57,7 @@ const Login = () => {
             <p>Remember me</p>
           </div>
 
-          <p className="forgot-password text-purple-color">
-            Forgot Password?
-          </p>
+          <p className="forgot-password text-purple-color">Forgot Password?</p>
         </div>
 
         <button type="submit" className="login-btn form-btn">
@@ -71,7 +68,9 @@ const Login = () => {
         <div className="login-register-link">
           <p>
             Don't have an account?{" "}
-            <span className="text-purple-color">Register</span>
+            <NavLink to={"/register"} className="text-purple-color">
+              Register
+            </NavLink>
           </p>
         </div>
       </form>
