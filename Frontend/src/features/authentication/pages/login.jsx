@@ -4,14 +4,16 @@ import "../../shared/style.global.css";
 import { NavLink } from "react-router";
 import { useAuth } from "../hooks/useAuth";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 const Login = () => {
+  const navigate = useNavigate();
   const { loading, handleLogin } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     if (email.trim() === "") {
       return toast.error("Email is Required");
@@ -20,7 +22,7 @@ const Login = () => {
     } else if (email.trim() === "" && password.trim() === "") {
       return toast.error("Email and Password is Required");
     } else {
-      const data = await handleLogin({ username, email, password });
+      const data = await handleLogin({ email, password });
       console.log(data);
     }
   };

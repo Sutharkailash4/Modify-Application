@@ -1,12 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import ".././style/register.css";
 import "../../shared/style.global.css";
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
+import { toast } from "react-toastify";
 
 const Register = () => {
+  const navigate = useNavigate();
+
+  const [loading, handleRegister] = useAuth();
+
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    if (
+      username.trim() === "" &&
+      email.trim() === "" &&
+      password.trim() === "" &&
+      confirmPassword.trim() === ""
+    ) {
+      return toast.error("All Filed Are Required");
+    } else if (username.trim() === "") {
+      return toast.error("Username is Required");
+    } else if (email.trim() === "") {
+      return toast.error("Email is Required");
+    } else if (password.trim() === "") {
+      return toast.error("Password is Required");
+    } else if (confirmPassword.trim() === "") {
+      return toast.error("Confirm Password is Required");
+    } else {
+        
+    }
+  };
+
   return (
     <div className="register-page">
-      <form>
+      <form
+        onSubmit={(e) => {
+          submitHandler(e);
+        }}
+      >
         <div className="register-heading-box">
           <div className="register-heading-img-box">
             <img src="../../../.././public/face-id.png" alt="image not found" />
@@ -37,6 +75,10 @@ const Register = () => {
             placeholder="Enter Your Full Name"
             id="register-name"
             name="register-name"
+            value={username}
+            onChange={(text) => {
+              setUsername(text.target.value);
+            }}
           />
           <img
             src="../../../.././public/email.png"
@@ -51,6 +93,10 @@ const Register = () => {
             placeholder="Enter Your Email"
             id="register-email"
             name="register-email"
+            value={email}
+            onChange={(text) => {
+              setEmail(text.target.value);
+            }}
           />
           <img
             src="../../../.././public/lock.png"
@@ -65,6 +111,10 @@ const Register = () => {
             placeholder="Create a Password"
             id="register-password"
             name="register-password"
+            value={password}
+            onChange={(text) => {
+              setPassword(text.target.value);
+            }}
           />
           <img
             src="../../../.././public/lock.png"
@@ -79,6 +129,10 @@ const Register = () => {
             placeholder="Cofirm Your Password"
             id="register-confirm-password"
             name="register-confirm-password"
+            value={confirmPassword}
+            onChange={(text) => {
+              setConfirmPassword(text.target.value);
+            }}
           />
         </div>
         <div className="register-terms-box">
