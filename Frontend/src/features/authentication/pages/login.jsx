@@ -1,12 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import ".././style/login.css";
 import "../../shared/style.global.css";
 import { NavLink } from "react-router";
+import { useAuth } from "../hooks/useAuth";
+import { toast } from "react-toastify";
 
 const Login = () => {
+  const { loading, handleLogin } = useAuth();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (email.trim() === "") {
+      return toast.error("Email is Required");
+    } else if (password.trim() === "") {
+      return toast.error("Password is Required");
+    } else if (email.trim() === "" && password.trim() === "") {
+      return toast.error("Email and Password is Required");
+    } else {
+      const data = await handleLogin({ username, email, password });
+      console.log(data);
+    }
+  };
+
   return (
     <div className="login-page">
-      <form>
+      <form
+        onSubmit={(e) => {
+          submitHandler(e);
+        }}
+      >
         <div className="login-heading-box">
           <div className="login-heading-img-box">
             <img src="../../../.././public/face-id.png" alt="image not found" />
@@ -38,7 +63,16 @@ const Login = () => {
             Email Address
           </span>
 
-          <input type="email" placeholder="Enter Your Email" id="login-email" name="login-email"/>
+          <input
+            type="email"
+            placeholder="Enter Your Email"
+            id="login-email"
+            name="login-email"
+            value={email}
+            onChange={(text) => {
+              setEmail(text.target.value);
+            }}
+          />
 
           <img
             src="../../../.././public/lock.png"
@@ -48,7 +82,16 @@ const Login = () => {
 
           <span className="login-input-span login-password-span">Password</span>
 
-          <input type="password" placeholder="Enter Your Password" id="login-password" name="login-password"/>
+          <input
+            type="password"
+            placeholder="Enter Your Password"
+            id="login-password"
+            name="login-password"
+            value={password}
+            onChange={(text) => {
+              setPassword(text.target.value);
+            }}
+          />
         </div>
 
         <div className="login-remember-forgot-box">

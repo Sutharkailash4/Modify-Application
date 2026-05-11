@@ -53,5 +53,5 @@ export const useAuth = async () => {
         }
     }
 
-    return {handleRegister, handleLogin, handleGetMe, handleLogout};
+    return {user, loading, handleRegister, handleLogin, handleGetMe, handleLogout};
 }
