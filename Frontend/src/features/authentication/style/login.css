@@ -168,3 +168,11 @@
     font-family: sans-serif;
     font-size: 16px;
 }
+
+.login-page #show-password-login{
+     position: absolute;
+    top: 69%;
+    right: 5%;
+    font-size: 20px;
+    cursor: pointer;
+}

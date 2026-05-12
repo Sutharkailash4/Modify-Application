@@ -171,3 +171,11 @@
 .register-page .login-register-link p{
     font-family : sans-serif
 }
+
+.register-page #show-password-register{
+    position: absolute;
+    top: 58%;
+    right: 5%;
+    font-size: 20px;
+    cursor: pointer;
+}
