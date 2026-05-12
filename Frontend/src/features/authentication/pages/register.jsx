@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 const Register = () => {
   const navigate = useNavigate();
 
-  const [loading, handleRegister] = useAuth();
+  const { loading, handleRegister } = useAuth();
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -34,7 +34,7 @@ const Register = () => {
     } else if (confirmPassword.trim() === "") {
       return toast.error("Confirm Password is Required");
     } else {
-        
+      const data = await handleRegister({ username, email, password });
     }
   };
 
@@ -145,7 +145,7 @@ const Register = () => {
         </div>
         <button type="submit" className="register-btn form-btn">
           Create Account
-          <i class="ri-arrow-right-long-fill"></i>
+          <i className="ri-arrow-right-long-fill"></i>
         </button>
         <div className="login-register-link">
           <p>

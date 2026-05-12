@@ -12,7 +12,7 @@ export const useAuth = () => {
     const handleRegister = async ({username, email, password}) => {
         try {
             setLoading(true);
-            const data = await register;
+            const data = await register({username,email,password});
             setUser(data);
             setLoading(false);
         } catch(error) {
@@ -23,7 +23,7 @@ export const useAuth = () => {
     const handleLogin = async ({ email, password}) => {
         try {
             setLoading(true);
-            const data = await login;
+            const data = await login({email, password});
             setUser(data)
             setLoading(false)
         } catch(error) {
@@ -34,7 +34,7 @@ export const useAuth = () => {
     const handleGetMe = async () => {
         try {
             setLoading(true)
-            const data = await getMe;
+            const data = await getMe();
             setUser(data)
             setLoading(false)
         } catch(error) {
@@ -45,7 +45,7 @@ export const useAuth = () => {
     const handleLogout = async () => {
         try {
             setLoading(true)
-            const data = await logout;
+            const data = await logout();
             setUser(data)
             setLoading(false)
         } catch(error) {    

@@ -23,7 +23,6 @@ const Login = () => {
       return toast.error("Email and Password is Required");
     } else {
       const data = await handleLogin({ email, password });
-      console.log(data);
     }
   };
 
