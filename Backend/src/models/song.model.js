@@ -5,13 +5,21 @@ const songSchema = new mongoose.Schema({
         type : String,
         required : [true, "Song URL is Required"]
     },
-    postURL : {
+    posterURL : {
         type : String,
         required : [true, "Post URL is Required"]
     },
     title : {
         type : String,
         required : [true, "Song Title is Required"]
+    },
+    mood : {
+        type : String,
+        required : [true, "Mood is Required"],
+        enum : {
+            values : ["happy, sad, surprised"],
+            message : "enum this is"
+        }
     }
 });
 
