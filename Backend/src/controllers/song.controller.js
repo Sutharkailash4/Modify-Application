@@ -51,7 +51,7 @@ async function getSongController(req, res) {
     })
 
     res.status(200).json({
-        message: "song fetched successfully.",
+        message: "Song Fetched Successfully.",
         song,
     })
 
