@@ -1,23 +1,19 @@
-const imageKit = require("@imagekit/nodejs").default;
+const ImageKit = require("@imagekit/nodejs").default
 
-const client = new imageKit({
-    privateKey : process.env.IMAGEKIT_PRIVATE_KEY
-});
+const client = new ImageKit({
+    privateKey: process.env.IMAGEKIT_PRIVATE_KEY
+})
 
-const uploadFile = async ({buffer, filename, folder}) => {
-    try {
-        const file = await client.files.upload({
-            file : buffer.toString("base64"),
-            filename : filename,
-            folder : folder
-        });
+async function uploadFile({ buffer, filename, folder = "" }) {
 
-        return file;
-    } catch(error){
-        console.log(error.message);
-    }
+    const file = await client.files.upload({
+        file: await ImageKit.toFile(Buffer.from(buffer)),
+        fileName: filename,
+        folder
+    })
+
+    return file
+
 }
 
-module.exports = {
-    uploadFile
-}
+module.exports = { uploadFile }

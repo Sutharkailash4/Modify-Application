@@ -1,61 +1,61 @@
-const model = require("../models/song.model");
-const id3 = require("node-id3");
-const storageService = require("../services/storage.service");
+const songModel = require("../models/song.model")
+const storageService = require("../services/storage.service")
+const id3 = require("node-id3")
 
-const uploadSongController = async (req, res) => {
-    try {
 
-        if (!req.file) {
-            return res.status(400).json({
-                message: "Song file is required"
-            });
-        }
+async function uploadSongController(req, res) {
 
-        const songBuffer = req.file.buffer;
-
-        const tags = id3.read(songBuffer);
-
-        const title = tags.title || "unknown-song";
-
-        const songFile = await storageService.uploadFile({
-            buffer: songBuffer,
-            filename: title + ".mp3",
-            folder: "/moodify/songs"
-        });
-
-        let posterFile = null;
-
-        if (tags.image?.imageBuffer) {
-            posterFile = await storageService.uploadFile({
-                buffer: tags.image.imageBuffer,
-                filename: title + ".jpeg",
-                folder: "/moodify/posters"
-            });
-        }
-
-        const song = await model.create({
-            songURL: songFile.url,
-            posterURL: posterFile ? posterFile.url : "",
-            title: title,
-            mood: req.body.mood
-        });
-
-        res.status(201).json({
-            message: "Song Created Successfully",
-            song
-        });
-
-    } catch (error) {
-
-        console.log(error);
-
-        res.status(400).json({
-            message: "Something Went Wrong",
-            error: error.message
+    if(!req.file){
+        return res.status(404).json({
+            message : "File Not ProvidedF"
         });
     }
-};
+    const songBuffer = req.file.buffer
+    const { mood } = req.body
 
-module.exports = {
-    uploadSongController
-};
+    const tags = id3.read(songBuffer)
+
+    const [ songFile, posterFile ] = await Promise.all([
+        storageService.uploadFile({
+            buffer: songBuffer,
+            filename: tags.title + ".mp3",
+            folder: "/cohort-2/moodify/songs"
+        }),
+        storageService.uploadFile({
+            buffer: tags.image.imageBuffer,
+            filename: tags.title + ".jpeg",
+            folder: "/cohort-2/moodify/posters"
+        })
+    ])
+
+    const song = await songModel.create({
+        title: tags.title,
+        url: songFile.url,
+        posterUrl: posterFile.url,
+        mood
+    })
+
+    res.status(201).json({
+        message: "song created successfully",
+        song
+    })
+
+}
+
+async function getSongController(req, res) {
+
+    const { mood } = req.query
+
+    const song = await songModel.findOne({
+        mood,
+    })
+
+    res.status(200).json({
+        message: "song fetched successfully.",
+        song,
+    })
+
+}
+
+
+module.exports = { uploadSongController, getSongController }
